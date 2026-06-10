@@ -188,7 +188,7 @@ Debug: false
 HTTPPort: $WEB_PORT
 Language: zh-CN
 GRPCPort: $GRPC_PORT
-GRPCHost: $ARGO_DOMAIN
+GRPCHost: $REAL_DOMAIN
 ProxyGRPCPort: $GRPC_PROXY_PORT
 TLS: true
 Oauth2:
