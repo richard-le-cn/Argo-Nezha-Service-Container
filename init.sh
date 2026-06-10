@@ -188,7 +188,7 @@ Debug: false
 HTTPPort: $WEB_PORT
 Language: zh-CN
 GRPCPort: $GRPC_PORT
-GRPCHost: $REAL_DOMAIN
+GRPCHost: $ARGO_DOMAIN
 ProxyGRPCPort: $GRPC_PROXY_PORT
 TLS: true
 Oauth2:
@@ -247,7 +247,8 @@ EOF
 
   # 生成自签署SSL证书
   openssl genrsa -out $WORK_DIR/nezha.key 2048
-  openssl req -new -subj "/CN=$ARGO_DOMAIN" -key $WORK_DIR/nezha.key -out $WORK_DIR/nezha.csr
+  # openssl req -new -subj "/CN=$ARGO_DOMAIN" -key $WORK_DIR/nezha.key -out $WORK_DIR/nezha.csr
+  openssl req -new -subj "/CN=$ARGO_DOMAIN" -key $WORK_DIR/nezha.key -out $WORK_DIR/nezha.csr -addext "subjectAltName = DNS:$ARGO_DOMAIN, DNS:*.$ARGO_DOMAIN, DNS:$REAL_DOMAIN, DNS:*.$REAL_DOMAIN"
   openssl x509 -req -days 36500 -in $WORK_DIR/nezha.csr -signkey $WORK_DIR/nezha.key -out $WORK_DIR/nezha.pem
 
   # 生成 backup.sh 文件的步骤1 - 设置环境变量
